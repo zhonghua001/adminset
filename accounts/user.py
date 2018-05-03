@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # update by guohongze@126.com
-from django.shortcuts import render, HttpResponseRedirect, RequestContext
+from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from forms import LoginUserForm, EditUserForm, ChangePasswordForm
@@ -63,7 +63,7 @@ def user_add(request):
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
             form.save()
-            return HttpResponseRedirect(reverse('user_list'), RequestContext(request))
+            return HttpResponseRedirect(reverse('user_list'))
     else:
         form = AddUserForm()
     kwargs = {
@@ -79,7 +79,7 @@ def user_add(request):
 def user_del(request, ids):
     if ids:
         get_user_model().objects.filter(id=ids).delete()
-    return HttpResponseRedirect(reverse('user_list'), RequestContext(request))
+    return HttpResponseRedirect(reverse('user_list'))
 
 
 @login_required

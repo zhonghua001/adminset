@@ -55,10 +55,10 @@ fi
 case $yum1 in
 	yes|y|Y|YES)
 	    yum install -y epel-release
-		yum install -y gcc expect python-pip python-devel ansible smartmontools dmidecode libselinux-python
+		yum install -y gcc expect python-pip python-devel ansible smartmontools dmidecode libselinux-python git rsync dos2unix
 		;;
 	no|n|N|NO)
-        yum install -y gcc python-pip expect python-devel ansible smartmontools dmidecode libselinux-python
+        yum install -y gcc python-pip expect python-devel ansible smartmontools dmidecode libselinux-python git rsync dos2unix
 		;;
 	*)
 		exit 1
@@ -69,9 +69,12 @@ esac
 echo "build webssh"
 /usr/bin/yum install -y nodejs
 cd $cur_dir/vendor/WebSSH2
-/usr/bin/npm install -g cnpm --registry=https://registry.npm.taobao.org
-/usr/bin/cnpm install --production
-/usr/bin/cnpm install forever -g
+#/usr/bin/npm install -g cnpm --registry=https://registry.npm.taobao.org
+#/usr/bin/cnpm install --production
+#/usr/bin/cnpm install forever -g
+/usr/bin/npm config set registry http://registry.cnpmjs.org
+/usr/bin/npm install --production
+/usr/bin/npm install forever -g
 
 # 分发代码
 if [ ! $cur_dir ] || [ ! $adminset_dir ]
@@ -222,13 +225,13 @@ nginx -s reload
 
 # create ssh config
 echo "create ssh-key, you could choose no if you had have ssh key"
-if [ -z ~/.ssh/id_rsa.pub ]
+if [ ! -e ~/.ssh/id_rsa.pub ]
 then
     ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa
 else
     echo "you had already have a ssh rsa file."
 fi
-scp $adminset_dir/install/server/ssh/config ~/.ssh
+scp $adminset_dir/install/server/ssh/config ~/.ssh/config
 
 
 # 完成安装

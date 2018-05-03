@@ -17,20 +17,27 @@ import ConfigParser
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+config = ConfigParser.ConfigParser()
+config.read(os.path.join(BASE_DIR, 'adminset.conf'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
+
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = 'n@s)3&f$tu#-^^%k-dj__th2)7m!m*(ag!fs=6ezyzb7l%@i@9'
-CELERY_BROKER_URL = 'redis://localhost/0'
+# if redis_password:
+#     CELERY_BROKER_URL = 'redis://:{0}@{1}:{2}/{3}'.format(redis_password, redis_host, redis_port, redis_db)
+# else:
+#     CELERY_BROKER_URL = 'redis://{0}:{1}/{2}'.format(redis_host, redis_port, redis_db)
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TASK_SERIALIZER = 'json'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
@@ -44,6 +51,7 @@ INSTALLED_APPS = [
     'accounts',
     'monitor',
     'appconf',
+    'delivery',
     'django_celery_results',
     'django_celery_beat',
     'django.contrib.admin',
@@ -96,8 +104,7 @@ WSGI_APPLICATION = 'adminset.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
-config = ConfigParser.ConfigParser()
-config.read(os.path.join(BASE_DIR, 'adminset.conf'))
+
 
 DATABASES = {}
 if config.get('db', 'engine') == 'mysql':

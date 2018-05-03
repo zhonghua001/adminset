@@ -96,30 +96,6 @@ function move_left(from, to, from_o, to_o) {
     });
 }
 
-//function move_all(from, to) {
-//    $("#" + from).children().each(function () {
-//        $("#" + to).append(this);
-//    });
-//}
-//
-
-//function selectAllOption(){
-//         var checklist = document.getElementsByName ("selected");
-//            if(document.getElementById("select_all").checked)
-//            {
-//            for(var i=0;i<checklist.length;i++)
-//            {
-//              checklist[i].checked = 1;
-//            }
-//            }else{
-//            for(var j=0;j<checklist.length;j++)
-//            {
-//             checklist[j].checked = 0;
-//            }
-//            }
-//
-//        }
-
 
 function selectAll(){
     // 选择该页面所有option
@@ -127,20 +103,6 @@ function selectAll(){
         $(this).attr('selected', true)
     })
 }
-
-
-//
-//function move_all(from, to){
-//    $("#"+from).children().each(function(){
-//        $("#"+to).append(this);
-//    });
-//}
-
-//function commit_select(form_array){
-//    $('#{0} option'.format(form_array)).each(function(){
-//        $(this).prop('selected', true)
-//        })
-//}
 
 function getIDall() {
     var check_array = [];
